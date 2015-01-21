@@ -1,3 +1,4 @@
+
 package edu.gatech.oad.antlab.person;
 
 /**
@@ -30,8 +31,13 @@ public class Person4 {
      * @return the modified string
      */
     private String calc(String input) {
-      //Person 4 put your implementation here
-      return null;
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            int character = input.charAt(i);
+            character = character + 1;
+            output = output  + (char)character;
+        }
+        return output;
     }
     
     /**
