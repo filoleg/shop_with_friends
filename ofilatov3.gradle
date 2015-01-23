@@ -12,5 +12,5 @@ repositories {
  
 //Project dependencies
 dependencies {
-    compile fileTree(dir:'lib', include: ['*.jar'])//'lib/resources.jar')
+    compile fileTree(dir:'lib', include: ['*.jar'])
 }
