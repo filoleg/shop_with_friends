@@ -1,12 +1,14 @@
 apply plugin: 'java'
- 
-project.name = 'Shop with Friends'
+
+// Define build information
 version = '1.0'
-entryPoint = 'edu.gatech.oad.antlab.pkg1.AntLabMain'
+ext.entryPoint = 'edu.gatech.oad.antlab.pkg1.AntLabMain'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
  
+// @Override jar implementation
 jar {
+	// Build manifest file
 	manifest {
 		attributes(
 			"Implementation-Title":	project.name,
@@ -14,8 +16,21 @@ jar {
 			"Main-Class": entryPoint,
 		)
 	}
+	
+	// Include all files required for runtime
+	// Note: configurations.compile should work as well,
+	// But configurations.runtime automatically includes those files.
+	from {
+		configurations.runtime.collect {
+			it.isDirection() ? it : zipTree(it)
+		}
+	}
 }
  
+// Include Maven repository
+repositories {
+    mavenCentral()
+}
  
 //Project dependencies
 dependencies {
