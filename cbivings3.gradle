@@ -1,16 +1,38 @@
 apply plugin: 'java'
-  
+
+// Define build information
 version = '1.0'
+ext.entryPoint = 'edu.gatech.oad.antlab.pkg1.AntLabMain'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-  
-  
-//Get dependencies from Maven central repository
-repositories {
-  mavenCentral()
+ 
+// @Override jar implementation
+jar {
+	// Build manifest file
+	manifest {
+		attributes(
+			"Implementation-Title":	project.name,
+			"Implementation-Version": version,
+			"Main-Class": entryPoint,
+		)
+	}
+	
+	// Include all files required for runtime
+	// Note: configurations.compile should work as well,
+	// But configurations.runtime automatically includes those files.
+	from {
+		configurations.runtime.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 }
-  
+ 
+// Include Maven repository
+repositories {
+    mavenCentral()
+}
+ 
 //Project dependencies
 dependencies {
-  compile fileTree(dir:'lib', include: ['*.jar'])
+    compile fileTree(dir: 'lib', include: ['*.jar'])
 }
